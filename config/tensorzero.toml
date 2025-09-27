@@ -1,0 +1,28 @@
+#[functions.extract_data.variants.gpt_4o_mini]
+#type = "chat_completion"
+#model = "openai::gpt-4o-mini-2024-07-18"
+#weight = 0.3
+
+[models.google_ai_studio_gemini_gemini_2_0_flash]
+routing = ["google_ai_studio_gemini"]
+
+[models.google_ai_studio_gemini_gemini_2_0_flash.providers.google_ai_studio_gemini]
+type = "google_ai_studio_gemini"
+api_key_location = "env::GOOGLE_AI_STUDIO_GEMINI_API_KEY"
+#api_key = "${GEMINI_API_KEY}"
+model_name = "gemini-2.0-flash"
+#retries = { num_retries = 3, max_delay_s = 10 }
+
+[functions.extract_data]
+type = "chat"
+
+[functions.extract_data.variants.gemini_2_0_flash_8b]
+type = "chat_completion"
+model = "google_ai_studio_gemini::gemini-2.0-flash"
+
+
+#vision_model = 'gemini-pro-vision'
+#weight = 0.7
+
+# ... and a variant is one of many implementations we can use to tackle it (a choice of prompt, model, etc.).
+# Since we only have one variant for this function, the gateway will always use it.

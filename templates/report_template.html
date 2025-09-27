@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Dataset Analysis Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Perpetua&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Perpetua', serif;
+      background-color: #fdf6f0;
+      color: #3d0c0c;
+      padding: 2rem;
+    }
+    .report-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      color: #600202;
+      text-align: center;
+    }
+    h2 {
+      color: #7d2323;
+      margin-top: 2rem;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    ul li {
+      margin: 0.5rem 0;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      margin: 1rem auto;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    .progress-container {
+      margin: 1rem auto;
+      max-width: 300px;
+      background: #eee;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 12px;
+      background: #8c1c1c;
+      width: 0;
+      animation: loadBar 2s forwards;
+    }
+    @keyframes loadBar {
+      to {
+        width: 100%;
+      }
+    }
+    pre.insights {
+      background: #fff7f4;
+      padding: 1rem;
+      border: 1px solid #e6b3b3;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .ai-box {
+      background: #fff3f0;
+      border-left: 5px solid #7d2323;
+      padding: 1rem;
+      border-radius: 8px;
+      color: #3d0c0c;
+      font-family: 'Perpetua', serif;
+    }
+    section{
+      width: 600px;
+      height: 800px;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-container">
+    <h1>AI Dataset Analysis Report</h1>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+    <p><b>Task Type:</b> {{ task_type }}</p>
+    <p><b>Best Model:</b> {{ best_model }}</p>
+
+    <h2>Performance Metrics</h2>
+    <ul>
+      {% for key, value in metrics.items() %}
+        <li><b>{{ key }}:</b> {{ value }}</li>
+      {% endfor %}
+    </ul>
+    <!-- {% if chart_path %}
+        <div class="section">
+            <h2>Visualization</h2>
+            <div class="chart-container">
+                <img src="{{ url_for('static', filename=chart_path) }}" alt="Chart Visualization">
+            </div>
+        </div>
+    {% endif %} -->
+
+
+    <h2>Performance Explanation</h2>
+    <p>{{ explanation }}</p>
+
+
+    <h2>Explanation & Insights</h2>
+    <pre class="insights">{{ insights }}</pre>
+    <div class="ai-box">
+      <h2>AI-Generated Recommendations</h2>
+      <p>{{ ai_insight }}</p>
+    </div>
+  </div>
+</body>
+</html>

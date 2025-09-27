@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Dataset</title>
+  <link href="https://fonts.googleapis.com/css2?family=Perpetua&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Perpetua', serif;
+      background-color: #fdf6f0;
+      color: #3d0c0c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .upload-box {
+      background: #fff;
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      color: #600202;
+      margin-bottom: 1rem;
+    }
+    input[type="file"] {
+      display: block;
+      margin: 1.5rem auto;
+    }
+    select, button {
+      padding: 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 1rem;
+      width: 100%;
+      font-family: 'Perpetua', serif;
+    }
+    button {
+      background-color: #8c1c1c;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #a83232;
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-box">
+    <h1>Upload Dataset</h1>
+    <form method="POST" action="/analyze" enctype="multipart/form-data">
+      <input type="file" name="dataset" id="datasetInput" accept=".csv,.xlsx,.pdf" required>
+      <select name="target_column" id="targetSelect" required>
+        <option value="">-- Select Target Column --</option>
+      </select>
+      <button type="submit">Analyze</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('datasetInput').addEventListener('change', async function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('dataset', file);
+
+      const response = await fetch('/extract_columns', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      const select = document.getElementById('targetSelect');
+      select.innerHTML = '<option value="">-- Select Target Column --</option>';
+
+      data.columns.forEach(col => {
+        const option = document.createElement('option');
+        option.value = col;
+        option.textContent = col;
+        select.appendChild(option);
+      });
+    });
+  </script>
+</body>
+</html>
